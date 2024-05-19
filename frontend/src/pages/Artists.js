@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredArtists, setFilteredArtists] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,14 +29,28 @@ const Artists = () => {
     fetchArtists();
   }, []);
 
+  useEffect(() => {
+    setFilteredArtists(
+      artists.filter((artist) =>
+        artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, artists]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div>
       <h1>Artists</h1>
+      <input
+        type="text"
+        placeholder="Search artists..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <ul>
-        {artists.map((artist) => (
+        {filteredArtists.map((artist) => (
           <li key={artist.id}>
             <Link to={`/artists/${artist.id}`}>{artist.name}</Link>
           </li>

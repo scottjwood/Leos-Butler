@@ -16,10 +16,12 @@ import CastingProcesses from './pages/CastingProcesses';
 import CastingProcessDetail from './pages/CastingProcessDetail';
 import CastingProcessForm from './components/CastingProcessForm';
 import Dashboard from './pages/Dashboard';
+import NavBar from './components/NavBar'; // Add this line
 
 function App() {
   return (
     <Router>
+      <NavBar /> {/* Add this line */}
       <Routes>
         <Route path="/artists" element={<Artists />} />
         <Route path="/artists/new" element={<ArtistForm />} />
