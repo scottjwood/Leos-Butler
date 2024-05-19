@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
-const { Artist, Project, StorageLocation, CastingProcess, User } = require('../models/db');
+const { Artist, Project, StorageLocation, CastingProcess, User, Notification } = require('../models/db');
 
 // Create a new project with notification
 router.post('/projects', authenticate, async (req, res) => {

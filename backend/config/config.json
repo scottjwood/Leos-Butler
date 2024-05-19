@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "scott",
+    "password": "scott",
+    "database": "foundry_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "scott",
+    "password": "scott",
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "scott",
+    "password": "scott",
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
