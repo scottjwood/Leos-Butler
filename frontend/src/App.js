@@ -8,6 +8,9 @@ import ProjectDetail from './pages/ProjectDetail';
 import ProjectForm from './components/ProjectForm';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import StorageLocations from './pages/StorageLocations';
+import StorageLocationDetail from './pages/StorageLocationDetail';
+import StorageLocationForm from './components/StorageLocationForm';
 
 function App() {
   return (
@@ -23,6 +26,10 @@ function App() {
         <Route path="/projects/:id/edit" element={<ProjectForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/storage-locations" element={<StorageLocations />} />
+        <Route path="/storage-locations/new" element={<StorageLocationForm />} />
+        <Route path="/storage-locations/:id" element={<StorageLocationDetail />} />
+        <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
       </Routes>
     </Router>
   );

@@ -69,4 +69,22 @@ const User = sequelize.define('User', {
   timestamps: true,
 });
 
-module.exports = { sequelize, Artist, Project, User };
+const StorageLocation = sequelize.define('StorageLocation', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  description: {
+    type: DataTypes.TEXT,
+  },
+  capacity: {
+    type: DataTypes.INTEGER,
+  },
+}, {
+  timestamps: true,
+});
+
+Project.belongsTo(StorageLocation, { foreignKey: 'storage_location' });
+
+module.exports = { sequelize, Artist, Project, User, StorageLocation };
