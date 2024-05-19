@@ -85,6 +85,35 @@ const StorageLocation = sequelize.define('StorageLocation', {
   timestamps: true,
 });
 
-Project.belongsTo(StorageLocation, { foreignKey: 'storage_location' });
+const CastingProcess = sequelize.define('CastingProcess', {
+  project_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Project,
+      key: 'id'
+    },
+  },
+  step_name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+  },
+  cost: {
+    type: DataTypes.DECIMAL(10, 2),
+  },
+  time_required: {
+    type: DataTypes.STRING,
+  },
+  material_used: {
+    type: DataTypes.STRING,
+  },
+}, {
+  timestamps: true,
+});
 
-module.exports = { sequelize, Artist, Project, User, StorageLocation };
+Project.belongsTo(StorageLocation, { foreignKey: 'storage_location' });
+CastingProcess.belongsTo(Project, { foreignKey: 'project_id' });
+
+module.exports = { sequelize, Artist, Project, User, StorageLocation, CastingProcess };

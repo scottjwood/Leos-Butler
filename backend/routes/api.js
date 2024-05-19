@@ -1,76 +1,84 @@
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/auth');
-const { Artist, Project, StorageLocation } = require('../models/db');
+const { Artist, Project, StorageLocation, CastingProcess } = require('../models/db');
 
-// StorageLocation Routes
+// CastingProcess Routes
 
-// Get all storage locations
-router.get('/storage-locations', authenticate, async (req, res) => {
+// Get all casting processes for a project
+router.get('/projects/:projectId/casting-processes', authenticate, async (req, res) => {
   try {
-    const locations = await StorageLocation.findAll();
-    res.json(locations);
+    const processes = await CastingProcess.findAll({ where: { project_id: req.params.projectId } });
+    res.json(processes);
   } catch (error) {
-    console.error('Error fetching storage locations:', error);
-    res.status(500).json({ error: 'Failed to fetch storage locations' });
+    console.error('Error fetching casting processes:', error);
+    res.status(500).json({ error: 'Failed to fetch casting processes' });
   }
 });
 
-// Get a single storage location by ID
-router.get('/storage-locations/:id', authenticate, async (req, res) => {
+// Get a single casting process by ID
+router.get('/casting-processes/:id', authenticate, async (req, res) => {
   try {
-    const location = await StorageLocation.findByPk(req.params.id);
-    if (location) {
-      res.json(location);
+    const process = await CastingProcess.findByPk(req.params.id);
+    if (process) {
+      res.json(process);
     } else {
-      res.status(404).json({ error: 'Storage location not found' });
+      res.status(404).json({ error: 'Casting process not found' });
     }
   } catch (error) {
-    console.error('Error fetching storage location:', error);
-    res.status(500).json({ error: 'Failed to fetch storage location' });
+    console.error('Error fetching casting process:', error);
+    res.status(500).json({ error: 'Failed to fetch casting process' });
   }
 });
 
-// Create a new storage location
-router.post('/storage-locations', authenticate, async (req, res) => {
+// Create a new casting process
+router.post('/projects/:projectId/casting-processes', authenticate, async (req, res) => {
   try {
-    const location = await StorageLocation.create(req.body);
-    res.status(201).json(location);
+    const { step_name, description, cost, time_required, material_used } = req.body;
+    const process = await CastingProcess.create({
+      project_id: req.params.projectId,
+      step_name,
+      description,
+      cost,
+      time_required,
+      material_used,
+    });
+    res.status(201).json(process);
   } catch (error) {
-    console.error('Error creating storage location:', error);
-    res.status(500).json({ error: 'Failed to create storage location' });
+    console.error('Error creating casting process:', error);
+    res.status(500).json({ error: 'Failed to create casting process' });
   }
 });
 
-// Update an existing storage location
-router.put('/storage-locations/:id', authenticate, async (req, res) => {
+// Update an existing casting process
+router.put('/casting-processes/:id', authenticate, async (req, res) => {
   try {
-    const location = await StorageLocation.findByPk(req.params.id);
-    if (location) {
-      await location.update(req.body);
-      res.json(location);
+    const process = await CastingProcess.findByPk(req.params.id);
+    if (process) {
+      await process.update(req.body);
+      res.json(process);
     } else {
-      res.status(404).json({ error: 'Storage location not found' });
+      res.status(404).json({ error: 'Casting process not found' });
     }
   } catch (error) {
-    console.error('Error updating storage location:', error);
-    res.status(500).json({ error: 'Failed to update storage location' });
+    console.error('Error updating casting process:', error);
+    res.status(500).json({ error: 'Failed to update casting process' });
   }
 });
 
-// Delete a storage location
-router.delete('/storage-locations/:id', authenticate, async (req, res) => {
+// Delete a casting process
+router.delete('/casting-processes/:id', authenticate, async (req, res) => {
   try {
-    const location = await StorageLocation.findByPk(req.params.id);
-    if (location) {
-      await location.destroy();
+    const process = await CastingProcess.findByPk(req.params.id);
+    if (process) {
+      await process.destroy();
       res.status(204).end();
     } else {
-      res.status(404).json({ error: 'Storage location not found' });
+      res.status(404).json({ error: 'Casting process not found' });
     }
   } catch (error) {
-    console.error('Error deleting storage location:', error);
-    res.status(500).json({ error: 'Failed to delete storage location' });
+    console.error('Error deleting casting process:', error);
+    res.status(500).json({ error: 'Failed to delete casting process' });
   }
 });
 

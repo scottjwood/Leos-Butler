@@ -12,6 +12,9 @@ import StorageLocations from './pages/StorageLocations';
 import StorageLocationDetail from './pages/StorageLocationDetail';
 import StorageLocationForm from './components/StorageLocationForm';
 import StorageMap from './components/StorageMap';
+import CastingProcesses from './pages/CastingProcesses';
+import CastingProcessDetail from './pages/CastingProcessDetail';
+import CastingProcessForm from './components/CastingProcessForm';
 
 function App() {
   return (
@@ -25,6 +28,10 @@ function App() {
         <Route path="/projects/new" element={<ProjectForm />} />
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/projects/:id/edit" element={<ProjectForm />} />
+        <Route path="/projects/:projectId/casting-processes" element={<CastingProcesses />} />
+        <Route path="/projects/:projectId/casting-processes/new" element={<CastingProcessForm />} />
+        <Route path="/casting-processes/:id" element={<CastingProcessDetail />} />
+        <Route path="/casting-processes/:id/edit" element={<CastingProcessForm />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/storage-locations" element={<StorageLocations />} />
