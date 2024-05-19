@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require('cors'); // Import CORS package
 const app = express();
 
 // Middleware to parse JSON
@@ -10,12 +10,6 @@ app.use(bodyParser.json());
 
 // Enable CORS for all routes
 app.use(cors());
-
-// Example route for /api/artists
-app.get('/api/artists', (req, res) => {
-    // Example response, replace with actual data fetching logic
-    res.json([{ name: 'Artist 1' }, { name: 'Artist 2' }]);
-});
 
 // Middleware to log the request body
 app.use((req, res, next) => {
