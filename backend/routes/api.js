@@ -5,6 +5,34 @@ const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
 const { Artist, Project, StorageLocation, CastingProcess, User } = require('../models/db');
 
+// Get notifications for the logged-in user
+router.get('/notifications', authenticate, async (req, res) => {
+  try {
+    const notifications = await Notification.findAll({ where: { user_id: req.user.id } });
+    res.json(notifications);
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ error: 'Failed to fetch notifications' });
+  }
+});
+
+// Mark a notification as read
+router.put('/notifications/:id/read', authenticate, async (req, res) => {
+  try {
+    const notification = await Notification.findByPk(req.params.id);
+    if (notification && notification.user_id === req.user.id) {
+      notification.read = true;
+      await notification.save();
+      res.json(notification);
+    } else {
+      res.status(404).json({ error: 'Notification not found' });
+    }
+  } catch (error) {
+    console.error('Error updating notification:', error);
+    res.status(500).json({ error: 'Failed to update notification' });
+  }
+});
+
 // Artist Report
 router.get('/reports/artists', authenticate, async (req, res) => {
   try {

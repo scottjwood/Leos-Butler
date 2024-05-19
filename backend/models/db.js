@@ -113,7 +113,28 @@ const CastingProcess = sequelize.define('CastingProcess', {
   timestamps: true,
 });
 
+const Notification = sequelize.define('Notification', {
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
+      key: 'id'
+    },
+  },
+  message: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  read: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+}, {
+  timestamps: true,
+});
+
+User.hasMany(Notification, { foreignKey: 'user_id' });
 Project.belongsTo(StorageLocation, { foreignKey: 'storage_location' });
 CastingProcess.belongsTo(Project, { foreignKey: 'project_id' });
 
-module.exports = { sequelize, Artist, Project, User, StorageLocation, CastingProcess };
+module.exports = { sequelize, Artist, Project, User, StorageLocation, CastingProcess, Notification };

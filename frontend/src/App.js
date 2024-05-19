@@ -18,9 +18,10 @@ import CastingProcessForm from './components/CastingProcessForm';
 import Dashboard from './pages/Dashboard';
 import UserProfile from './pages/UserProfile';
 import UserSettings from './pages/UserSettings';
-import ArtistReport from './pages/ArtistReport'; // Add this line
-import ProjectReport from './pages/ProjectReport'; // Add this line
-import CastingProcessReport from './pages/CastingProcessReport'; // Add this line
+import ArtistReport from './pages/ArtistReport';
+import ProjectReport from './pages/ProjectReport';
+import CastingProcessReport from './pages/CastingProcessReport';
+import Notifications from './components/Notifications'; // Add this line
 import NavBar from './components/NavBar';
 
 function App() {
@@ -50,9 +51,10 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/settings" element={<UserSettings />} />
-        <Route path="/reports/artists" element={<ArtistReport />} /> {/* Add this line */}
-        <Route path="/reports/projects" element={<ProjectReport />} /> {/* Add this line */}
-        <Route path="/reports/casting-processes" element={<CastingProcessReport />} /> {/* Add this line */}
+        <Route path="/reports/artists" element={<ArtistReport />} />
+        <Route path="/reports/projects" element={<ProjectReport />} />
+        <Route path="/reports/casting-processes" element={<CastingProcessReport />} />
+        <Route path="/notifications" element={<Notifications />} /> {/* Add this line */}
       </Routes>
     </Router>
   );
