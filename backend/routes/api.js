@@ -5,6 +5,25 @@ const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
 const { Artist, Project, StorageLocation, CastingProcess, User } = require('../models/db');
 
+// Create a new project with notification
+router.post('/projects', authenticate, async (req, res) => {
+  try {
+    const { title, description, artist_id, mold_tracking_number, casting_cost, casting_time, material_usage, storage_location } = req.body;
+    const project = await Project.create({ title, description, artist_id, mold_tracking_number, casting_cost, casting_time, material_usage, storage_location });
+
+    // Create a notification for the user
+    await Notification.create({
+      user_id: req.user.id,
+      message: `New project "${title}" created.`
+    });
+
+    res.status(201).json(project);
+  } catch (error) {
+    console.error('Error creating project:', error);
+    res.status(500).json({ error: 'Failed to create project' });
+  }
+});
+
 // Get notifications for the logged-in user
 router.get('/notifications', authenticate, async (req, res) => {
   try {
