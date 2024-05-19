@@ -82,4 +82,19 @@ router.delete('/casting-processes/:id', authenticate, async (req, res) => {
   }
 });
 
+// Summary endpoint
+router.get('/summary', authenticate, async (req, res) => {
+  try {
+    const artistsCount = await Artist.count();
+    const projectsCount = await Project.count();
+    const castingProcessesCount = await CastingProcess.count();
+    
+    res.json({ artistsCount, projectsCount, castingProcessesCount });
+  } catch (error) {
+    console.error('Error fetching summary:', error);
+    res.status(500).json({ error: 'Failed to fetch summary' });
+  }
+});
+
+
 module.exports = router;

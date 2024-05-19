@@ -15,6 +15,7 @@ import StorageMap from './components/StorageMap';
 import CastingProcesses from './pages/CastingProcesses';
 import CastingProcessDetail from './pages/CastingProcessDetail';
 import CastingProcessForm from './components/CastingProcessForm';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/storage-locations/:id" element={<StorageLocationDetail />} />
         <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
         <Route path="/storage-map" element={<StorageMap />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
