@@ -16,8 +16,11 @@ import CastingProcesses from './pages/CastingProcesses';
 import CastingProcessDetail from './pages/CastingProcessDetail';
 import CastingProcessForm from './components/CastingProcessForm';
 import Dashboard from './pages/Dashboard';
-import UserProfile from './pages/UserProfile'; // Add this line
-import UserSettings from './pages/UserSettings'; // Add this line
+import UserProfile from './pages/UserProfile';
+import UserSettings from './pages/UserSettings';
+import ArtistReport from './pages/ArtistReport'; // Add this line
+import ProjectReport from './pages/ProjectReport'; // Add this line
+import CastingProcessReport from './pages/CastingProcessReport'; // Add this line
 import NavBar from './components/NavBar';
 
 function App() {
@@ -45,8 +48,11 @@ function App() {
         <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
         <Route path="/storage-map" element={<StorageMap />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<UserProfile />} /> {/* Add this line */}
-        <Route path="/settings" element={<UserSettings />} /> {/* Add this line */}
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/settings" element={<UserSettings />} />
+        <Route path="/reports/artists" element={<ArtistReport />} /> {/* Add this line */}
+        <Route path="/reports/projects" element={<ProjectReport />} /> {/* Add this line */}
+        <Route path="/reports/casting-processes" element={<CastingProcessReport />} /> {/* Add this line */}
       </Routes>
     </Router>
   );

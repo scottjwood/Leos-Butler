@@ -5,6 +5,58 @@ const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
 const { Artist, Project, StorageLocation, CastingProcess, User } = require('../models/db');
 
+// Artist Report
+router.get('/reports/artists', authenticate, async (req, res) => {
+  try {
+    const artistReport = await sequelize.query(
+      `SELECT a.name as artist, COUNT(p.id) as totalProjects, SUM(p.casting_cost) as totalCost 
+       FROM Artists a
+       LEFT JOIN Projects p ON a.id = p.artist_id
+       GROUP BY a.name`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    res.json(artistReport);
+  } catch (error) {
+    console.error('Error fetching artist report:', error);
+    res.status(500).json({ error: 'Failed to fetch artist report' });
+  }
+});
+
+// Project Report
+router.get('/reports/projects', authenticate, async (req, res) => {
+  try {
+    const projectReport = await sequelize.query(
+      `SELECT p.title as project, a.name as artist, SUM(cp.cost) as totalCost, SUM(cp.time_required) as totalTime 
+       FROM Projects p
+       LEFT JOIN Artists a ON p.artist_id = a.id
+       LEFT JOIN CastingProcesses cp ON p.id = cp.project_id
+       GROUP BY p.title, a.name`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    res.json(projectReport);
+  } catch (error) {
+    console.error('Error fetching project report:', error);
+    res.status(500).json({ error: 'Failed to fetch project report' });
+  }
+});
+
+// Casting Process Report
+router.get('/reports/casting-processes', authenticate, async (req, res) => {
+  try {
+    const castingProcessReport = await sequelize.query(
+      `SELECT cp.step_name as step, p.title as project, SUM(cp.cost) as totalCost, SUM(cp.time_required) as totalTime, SUM(cp.material_used) as materialUsed
+       FROM CastingProcesses cp
+       LEFT JOIN Projects p ON cp.project_id = p.id
+       GROUP BY cp.step_name, p.title`,
+      { type: sequelize.QueryTypes.SELECT }
+    );
+    res.json(castingProcessReport);
+  } catch (error) {
+    console.error('Error fetching casting process report:', error);
+    res.status(500).json({ error: 'Failed to fetch casting process report' });
+  }
+});
+
 // Get user profile
 router.get('/user', authenticate, async (req, res) => {
   try {
