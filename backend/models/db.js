@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('foundry_db', 'your_username', 'your_password', {
+const sequelize = new Sequelize('foundry_db', 'scott', 'scott', {
   host: 'localhost',
   dialect: 'postgres',
 });
