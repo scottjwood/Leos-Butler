@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as jwt_decode from 'jwt-decode';
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -22,11 +21,7 @@ const LoginForm = ({ onLogin }) => {
         console.log('User logged in:', data);
         setMessage('User logged in successfully!');
         setError('');
-
-        const decodedToken = jwt_decode(data.token);
-        console.log('Decoded Token:', decodedToken);
-
-        onLogin({ username: decodedToken.username, token: data.token });
+        onLogin(data);  // Adjust as needed
       } else {
         const errorText = await response.text();
         console.log('Failed response:', errorText);

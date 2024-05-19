@@ -6,7 +6,7 @@ const authenticate = require('../middleware/auth');
 const { Artist, Project, StorageLocation, CastingProcess, User, Notification } = require('../models/db');
 
 // Get all artists
-router.get('/artists', authenticate, async (req, res) => {
+router.get('/artists', async (req, res) => {
   try {
     const artists = await Artist.findAll();
     res.json(artists);
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Create a new project with notification
-router.post('/projects', authenticate, async (req, res) => {
+router.post('/projects', async (req, res) => {
   try {
     const { title, description, artist_id, mold_tracking_number, casting_cost, casting_time, material_usage, storage_location } = req.body;
     const project = await Project.create({ title, description, artist_id, mold_tracking_number, casting_cost, casting_time, material_usage, storage_location });
@@ -50,7 +50,7 @@ router.post('/projects', authenticate, async (req, res) => {
 });
 
 // Get notifications for the logged-in user
-router.get('/notifications', authenticate, async (req, res) => {
+router.get('/notifications', async (req, res) => {
   try {
     const notifications = await Notification.findAll({ where: { user_id: req.user.id } });
     res.json(notifications);
@@ -61,7 +61,7 @@ router.get('/notifications', authenticate, async (req, res) => {
 });
 
 // Mark a notification as read
-router.put('/notifications/:id/read', authenticate, async (req, res) => {
+router.put('/notifications/:id/read', async (req, res) => {
   try {
     const notification = await Notification.findByPk(req.params.id);
     if (notification && notification.user_id === req.user.id) {
@@ -78,7 +78,7 @@ router.put('/notifications/:id/read', authenticate, async (req, res) => {
 });
 
 // Artist Report
-router.get('/reports/artists', authenticate, async (req, res) => {
+router.get('/reports/artists', async (req, res) => {
   try {
     const artistReport = await sequelize.query(
       `SELECT a.name as artist, COUNT(p.id) as totalProjects, SUM(p.casting_cost) as totalCost 
@@ -95,7 +95,7 @@ router.get('/reports/artists', authenticate, async (req, res) => {
 });
 
 // Project Report
-router.get('/reports/projects', authenticate, async (req, res) => {
+router.get('/reports/projects', async (req, res) => {
   try {
     const projectReport = await sequelize.query(
       `SELECT p.title as project, a.name as artist, SUM(cp.cost) as totalCost, SUM(cp.time_required) as totalTime 
@@ -113,7 +113,7 @@ router.get('/reports/projects', authenticate, async (req, res) => {
 });
 
 // Casting Process Report
-router.get('/reports/casting-processes', authenticate, async (req, res) => {
+router.get('/reports/casting-processes', async (req, res) => {
   try {
     const castingProcessReport = await sequelize.query(
       `SELECT cp.step_name as step, p.title as project, SUM(cp.cost) as totalCost, SUM(cp.time_required) as totalTime, SUM(cp.material_used) as materialUsed
@@ -130,7 +130,7 @@ router.get('/reports/casting-processes', authenticate, async (req, res) => {
 });
 
 // Get user profile
-router.get('/user', authenticate, async (req, res) => {
+router.get('/user', async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
       attributes: ['id', 'username', 'role']
@@ -147,7 +147,7 @@ router.get('/user', authenticate, async (req, res) => {
 });
 
 // Change user password
-router.post('/user/change-password', authenticate, async (req, res) => {
+router.post('/user/change-password', async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const user = await User.findByPk(req.user.id);
@@ -166,7 +166,7 @@ router.post('/user/change-password', authenticate, async (req, res) => {
 });
 
 // Get all casting processes for a project
-router.get('/projects/:projectId/casting-processes', authenticate, async (req, res) => {
+router.get('/projects/:projectId/casting-processes', async (req, res) => {
   try {
     const processes = await CastingProcess.findAll({ where: { project_id: req.params.projectId } });
     res.json(processes);
@@ -177,7 +177,7 @@ router.get('/projects/:projectId/casting-processes', authenticate, async (req, r
 });
 
 // Get a single casting process by ID
-router.get('/casting-processes/:id', authenticate, async (req, res) => {
+router.get('/casting-processes/:id', async (req, res) => {
   try {
     const process = await CastingProcess.findByPk(req.params.id);
     if (process) {
@@ -192,7 +192,7 @@ router.get('/casting-processes/:id', authenticate, async (req, res) => {
 });
 
 // Create a new casting process
-router.post('/projects/:projectId/casting-processes', authenticate, async (req, res) => {
+router.post('/projects/:projectId/casting-processes', async (req, res) => {
   try {
     const { step_name, description, cost, time_required, material_used } = req.body;
     const process = await CastingProcess.create({
@@ -211,7 +211,7 @@ router.post('/projects/:projectId/casting-processes', authenticate, async (req, 
 });
 
 // Update an existing casting process
-router.put('/casting-processes/:id', authenticate, async (req, res) => {
+router.put('/casting-processes/:id', async (req, res) => {
   try {
     const process = await CastingProcess.findByPk(req.params.id);
     if (process) {
@@ -227,7 +227,7 @@ router.put('/casting-processes/:id', authenticate, async (req, res) => {
 });
 
 // Delete a casting process
-router.delete('/casting-processes/:id', authenticate, async (req, res) => {
+router.delete('/casting-processes/:id', async (req, res) => {
   try {
     const process = await CastingProcess.findByPk(req.params.id);
     if (process) {
@@ -243,7 +243,7 @@ router.delete('/casting-processes/:id', authenticate, async (req, res) => {
 });
 
 // Summary endpoint
-router.get('/summary', authenticate, async (req, res) => {
+router.get('/summary', async (req, res) => {
   try {
     const artistsCount = await Artist.count();
     const projectsCount = await Project.count();
