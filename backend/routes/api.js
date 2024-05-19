@@ -1,9 +1,45 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
-const { Artist, Project, StorageLocation, CastingProcess } = require('../models/db');
+const { Artist, Project, StorageLocation, CastingProcess, User } = require('../models/db');
 
-// CastingProcess Routes
+// Get user profile
+router.get('/user', authenticate, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['id', 'username', 'role']
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ error: 'Failed to fetch user profile' });
+  }
+});
+
+// Change user password
+router.post('/user/change-password', authenticate, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findByPk(req.user.id);
+    if (user && await bcrypt.compare(oldPassword, user.password)) {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+      await user.save();
+      res.json({ message: 'Password changed successfully' });
+    } else {
+      res.status(400).json({ error: 'Old password is incorrect' });
+    }
+  } catch (error) {
+    console.error('Error changing password:', error);
+    res.status(500).json({ error: 'Failed to change password' });
+  }
+});
 
 // Get all casting processes for a project
 router.get('/projects/:projectId/casting-processes', authenticate, async (req, res) => {

@@ -16,12 +16,14 @@ import CastingProcesses from './pages/CastingProcesses';
 import CastingProcessDetail from './pages/CastingProcessDetail';
 import CastingProcessForm from './components/CastingProcessForm';
 import Dashboard from './pages/Dashboard';
-import NavBar from './components/NavBar'; // Add this line
+import UserProfile from './pages/UserProfile'; // Add this line
+import UserSettings from './pages/UserSettings'; // Add this line
+import NavBar from './components/NavBar';
 
 function App() {
   return (
     <Router>
-      <NavBar /> {/* Add this line */}
+      <NavBar />
       <Routes>
         <Route path="/artists" element={<Artists />} />
         <Route path="/artists/new" element={<ArtistForm />} />
@@ -43,6 +45,8 @@ function App() {
         <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
         <Route path="/storage-map" element={<StorageMap />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<UserProfile />} /> {/* Add this line */}
+        <Route path="/settings" element={<UserSettings />} /> {/* Add this line */}
       </Routes>
     </Router>
   );
