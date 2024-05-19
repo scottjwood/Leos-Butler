@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Artist } = require('../models/db');
+const { Artist, Project } = require('../models/db');
 
 // Get all artists
 router.get('/artists', async (req, res) => {
@@ -68,6 +68,77 @@ router.delete('/artists/:id', async (req, res) => {
   } catch (error) {
     console.error('Error deleting artist:', error);
     res.status(500).json({ error: 'Failed to delete artist' });
+  }
+});
+
+// Project Routes
+
+// Get all projects
+router.get('/projects', async (req, res) => {
+  try {
+    const projects = await Project.findAll();
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
+// Get a single project by ID
+router.get('/projects/:id', async (req, res) => {
+  try {
+    const project = await Project.findByPk(req.params.id);
+    if (project) {
+      res.json(project);
+    } else {
+      res.status(404).json({ error: 'Project not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching project:', error);
+    res.status(500).json({ error: 'Failed to fetch project' });
+  }
+});
+
+// Create a new project
+router.post('/projects', async (req, res) => {
+  try {
+    const project = await Project.create(req.body);
+    res.status(201).json(project);
+  } catch (error) {
+    console.error('Error creating project:', error);
+    res.status(500).json({ error: 'Failed to create project' });
+  }
+});
+
+// Update an existing project
+router.put('/projects/:id', async (req, res) => {
+  try {
+    const project = await Project.findByPk(req.params.id);
+    if (project) {
+      await project.update(req.body);
+      res.json(project);
+    } else {
+      res.status(404).json({ error: 'Project not found' });
+    }
+  } catch (error) {
+    console.error('Error updating project:', error);
+    res.status(500).json({ error: 'Failed to update project' });
+  }
+});
+
+// Delete a project
+router.delete('/projects/:id', async (req, res) => {
+  try {
+    const project = await Project.findByPk(req.params.id);
+    if (project) {
+      await project.destroy();
+      res.status(204).end();
+    } else {
+      res.status(404).json({ error: 'Project not found' });
+    }
+  } catch (error) {
+    console.error('Error deleting project:', error);
+    res.status(500).json({ error: 'Failed to delete project' });
   }
 });
 
