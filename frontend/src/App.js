@@ -21,7 +21,6 @@ import UserSettings from './pages/UserSettings';
 import ArtistReport from './pages/ArtistReport';
 import ProjectReport from './pages/ProjectReport';
 import CastingProcessReport from './pages/CastingProcessReport';
-// import Notifications from './components/Notifications'; // Remove this line
 import NavBar from './components/NavBar';
 
 const App = () => {
@@ -49,7 +48,7 @@ const App = () => {
         <Route path="/casting-processes/:id/edit" element={<CastingProcessForm />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/storage-locations" element={<StorageLocations />} />
+        <Route path="/storage-locations" element={<StorageLocations />} /> {/* Ensure this route exists */}
         <Route path="/storage-locations/new" element={<StorageLocationForm />} />
         <Route path="/storage-locations/:id" element={<StorageLocationDetail />} />
         <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
@@ -60,7 +59,6 @@ const App = () => {
         <Route path="/reports/artists" element={<ArtistReport />} />
         <Route path="/reports/projects" element={<ProjectReport />} />
         <Route path="/reports/casting-processes" element={<CastingProcessReport />} />
-        {/* Remove the Notifications route */}
       </Routes>
     </Router>
   );

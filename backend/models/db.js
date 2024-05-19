@@ -99,9 +99,22 @@ const Notification = sequelize.define('Notification', {
   timestamps: true
 });
 
+const StorageLocation = sequelize.define('StorageLocation', {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
+}, {
+  timestamps: true
+});
+
 User.hasMany(Notification, { foreignKey: 'user_id' });
 Notification.belongsTo(User, { foreignKey: 'user_id' });
 Artist.hasMany(Project, { foreignKey: 'artist_id' });
 Project.belongsTo(Artist, { foreignKey: 'artist_id' });
 
-module.exports = { sequelize, User, Artist, Project, Notification };
+module.exports = { sequelize, User, Artist, Project, Notification, StorageLocation };
