@@ -16,6 +16,16 @@ router.get('/artists', async (req, res) => {
   }
 });
 
+router.get('/projects', async (req, res) => {
+  try {
+    const projects = await Project.findAll();
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'Failed to fetch projects' });
+  }
+});
+
 // Register route
 router.post('/register', async (req, res) => {
   console.log(req.body); // Log the request body for debugging

@@ -21,7 +21,7 @@ import UserSettings from './pages/UserSettings';
 import ArtistReport from './pages/ArtistReport';
 import ProjectReport from './pages/ProjectReport';
 import CastingProcessReport from './pages/CastingProcessReport';
-import Notifications from './components/Notifications'; 
+import Notifications from './components/Notifications';
 import NavBar from './components/NavBar';
 
 const App = () => {
