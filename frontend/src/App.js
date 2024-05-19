@@ -21,7 +21,7 @@ import UserSettings from './pages/UserSettings';
 import ArtistReport from './pages/ArtistReport';
 import ProjectReport from './pages/ProjectReport';
 import CastingProcessReport from './pages/CastingProcessReport';
-import Notifications from './components/Notifications';
+// import Notifications from './components/Notifications'; // Remove this line
 import NavBar from './components/NavBar';
 
 const App = () => {
@@ -41,7 +41,7 @@ const App = () => {
         <Route path="/artists/:id/edit" element={<ArtistForm />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/new" element={<ProjectForm />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} /> {/* Add this line */}
+        <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/projects/:id/edit" element={<ProjectForm />} />
         <Route path="/projects/:projectId/casting-processes" element={<CastingProcesses />} />
         <Route path="/projects/:projectId/casting-processes/new" element={<CastingProcessForm />} />
@@ -60,7 +60,7 @@ const App = () => {
         <Route path="/reports/artists" element={<ArtistReport />} />
         <Route path="/reports/projects" element={<ProjectReport />} />
         <Route path="/reports/casting-processes" element={<CastingProcessReport />} />
-        <Route path="/notifications" element={<Notifications />} />
+        {/* Remove the Notifications route */}
       </Routes>
     </Router>
   );
