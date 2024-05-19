@@ -5,6 +5,17 @@ const jwt = require('jsonwebtoken');
 const authenticate = require('../middleware/auth');
 const { Artist, Project, StorageLocation, CastingProcess, User, Notification } = require('../models/db');
 
+// Get all artists
+router.get('/artists', authenticate, async (req, res) => {
+  try {
+    const artists = await Artist.findAll();
+    res.json(artists);
+  } catch (error) {
+    console.error('Error fetching artists:', error);
+    res.status(500).json({ error: 'Failed to fetch artists' });
+  }
+});
+
 // Create a new project with notification
 router.post('/projects', authenticate, async (req, res) => {
   try {
