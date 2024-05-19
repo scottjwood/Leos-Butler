@@ -58,7 +58,20 @@ router.post('/projects', async (req, res) => {
     res.status(500).json({ error: 'Failed to create project' });
   }
 });
-
+// Fetch a single project by ID
+router.get('/projects/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await Project.findByPk(id);
+    if (!project) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+    res.json(project);
+  } catch (error) {
+    console.error('Error fetching project:', error);
+    res.status(500).json({ error: 'Failed to fetch project' });
+  }
+});
 // Get notifications for the logged-in user
 router.get('/notifications', async (req, res) => {
   try {

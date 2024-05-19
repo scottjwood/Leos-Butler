@@ -41,7 +41,7 @@ const App = () => {
         <Route path="/artists/:id/edit" element={<ArtistForm />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/new" element={<ProjectForm />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} />
+        <Route path="/projects/:id" element={<ProjectDetail />} /> {/* Add this line */}
         <Route path="/projects/:id/edit" element={<ProjectForm />} />
         <Route path="/projects/:projectId/casting-processes" element={<CastingProcesses />} />
         <Route path="/projects/:projectId/casting-processes/new" element={<CastingProcessForm />} />
