@@ -4,6 +4,7 @@ const RegisterForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user');
+  const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -19,11 +20,15 @@ const RegisterForm = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('User registered:', data);
+        setMessage('User registered successfully!');
+        setError('');
       } else {
         setError('Failed to register');
+        setMessage('');
       }
     } catch (error) {
       setError('Failed to register');
+      setMessage('');
     }
   };
 
@@ -46,7 +51,8 @@ const RegisterForm = () => {
         <option value="admin">Admin</option>
       </select>
       <button type="submit">Register</button>
-      {error && <p>{error}</p>}
+      {message && <p>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };

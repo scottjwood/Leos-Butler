@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Artists from './pages/Artists';
 import ArtistDetail from './pages/ArtistDetail';
 import ArtistForm from './components/ArtistForm';
@@ -21,13 +21,19 @@ import UserSettings from './pages/UserSettings';
 import ArtistReport from './pages/ArtistReport';
 import ProjectReport from './pages/ProjectReport';
 import CastingProcessReport from './pages/CastingProcessReport';
-import Notifications from './components/Notifications'; // Add this line
+import Notifications from './components/Notifications'; 
 import NavBar from './components/NavBar';
 
-function App() {
+const App = () => {
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+  };
+
   return (
     <Router>
-      <NavBar />
+      <NavBar user={user} />
       <Routes>
         <Route path="/artists" element={<Artists />} />
         <Route path="/artists/new" element={<ArtistForm />} />
@@ -41,7 +47,7 @@ function App() {
         <Route path="/projects/:projectId/casting-processes/new" element={<CastingProcessForm />} />
         <Route path="/casting-processes/:id" element={<CastingProcessDetail />} />
         <Route path="/casting-processes/:id/edit" element={<CastingProcessForm />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/storage-locations" element={<StorageLocations />} />
         <Route path="/storage-locations/new" element={<StorageLocationForm />} />
@@ -54,10 +60,10 @@ function App() {
         <Route path="/reports/artists" element={<ArtistReport />} />
         <Route path="/reports/projects" element={<ProjectReport />} />
         <Route path="/reports/casting-processes" element={<CastingProcessReport />} />
-        <Route path="/notifications" element={<Notifications />} /> {/* Add this line */}
+        <Route path="/notifications" element={<Notifications />} />
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

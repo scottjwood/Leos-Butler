@@ -4,9 +4,16 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models/db');
 
+console.log('Auth routes loaded');
+
+// Test route to verify the route is accessible
+router.get('/test', (req, res) => {
+  res.json({ message: 'Auth route is working' });
+});
+
 // Register route
 router.post('/register', async (req, res) => {
-  console.log(req.body); // Log the request body for debugging
+  console.log(req.body);
   const { username, password, role } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
