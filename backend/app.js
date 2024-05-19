@@ -7,9 +7,9 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json()); // Ensure this line is present to parse JSON bodies
+app.use(bodyParser.json()); // Ensure body parser is used
 app.use('/api', apiRoutes);
-app.use('/api', authRoutes); // Ensure this line is present to use auth routes
+app.use('/api', authRoutes); // Ensure auth routes are used
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
