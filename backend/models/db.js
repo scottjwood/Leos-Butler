@@ -1,20 +1,18 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
 const sequelize = new Sequelize('foundry_db', 'scott', 'scott', {
-  host: 'localhost',
-  dialect: 'postgres',
+  host: '127.0.0.1',
+  dialect: 'postgres'
 });
 
 const Artist = sequelize.define('Artist', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   contact_details: {
     type: DataTypes.STRING,
-  },
-}, {
-  timestamps: true,
+    allowNull: true
+  }
 });
 
 const Project = sequelize.define('Project', {
@@ -23,32 +21,46 @@ const Project = sequelize.define('Project', {
     references: {
       model: Artist,
       key: 'id'
-    },
+    }
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   description: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
+    allowNull: true
   },
   mold_tracking_number: {
     type: DataTypes.STRING,
+    allowNull: false
   },
   casting_cost: {
-    type: DataTypes.DECIMAL(10, 2),
+    type: DataTypes.FLOAT,
+    allowNull: true
   },
   casting_time: {
     type: DataTypes.STRING,
+    allowNull: true
   },
   material_usage: {
     type: DataTypes.STRING,
+    allowNull: true
   },
   storage_location: {
     type: DataTypes.STRING,
+    allowNull: true
   },
-}, {
-  timestamps: true,
+  status: {
+    type: DataTypes.ENUM('active', 'inactive'),
+    allowNull: false,
+    defaultValue: 'active'
+  },
+  mold_location: {
+    type: DataTypes.ENUM('in-house', 'off-site'),
+    allowNull: false,
+    defaultValue: 'in-house'
+  }
 });
 
 const User = sequelize.define('User', {
@@ -67,72 +79,29 @@ const User = sequelize.define('User', {
   }
 });
 
-const StorageLocation = sequelize.define('StorageLocation', {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
-  capacity: {
-    type: DataTypes.INTEGER,
-  },
-}, {
-  timestamps: true,
-});
-
-const CastingProcess = sequelize.define('CastingProcess', {
-  project_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Project,
-      key: 'id'
-    },
-  },
-  step_name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
-  cost: {
-    type: DataTypes.DECIMAL(10, 2),
-  },
-  time_required: {
-    type: DataTypes.STRING,
-  },
-  material_used: {
-    type: DataTypes.STRING,
-  },
-}, {
-  timestamps: true,
-});
-
 const Notification = sequelize.define('Notification', {
   user_id: {
     type: DataTypes.INTEGER,
     references: {
       model: User,
       key: 'id'
-    },
+    }
   },
   message: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   read: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
+    defaultValue: false
+  }
 }, {
-  timestamps: true,
+  timestamps: true
 });
 
 User.hasMany(Notification, { foreignKey: 'user_id' });
-Project.belongsTo(StorageLocation, { foreignKey: 'storage_location' });
-CastingProcess.belongsTo(Project, { foreignKey: 'project_id' });
+Notification.belongsTo(User, { foreignKey: 'user_id' });
+Artist.hasMany(Project, { foreignKey: 'artist_id' });
+Project.belongsTo(Artist, { foreignKey: 'artist_id' });
 
-module.exports = { sequelize, Artist, Project, User, StorageLocation, CastingProcess, Notification };
+module.exports = { sequelize, User, Artist, Project, Notification };
