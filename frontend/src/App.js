@@ -1,17 +1,17 @@
+// /frontend/src/App.js
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Artists from './pages/Artists';
 import ArtistDetail from './pages/ArtistDetail';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Routes>
-        <Route path="/" element={<Artists />} />
+        <Route path="/artists" element={<Artists />} />
         <Route path="/artists/:id" element={<ArtistDetail />} />
       </Routes>
-    </div>
+    </Router>
   );
 }
 

@@ -1,35 +1,16 @@
-CREATE TABLE artists (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  contact_details TEXT
+-- Create the artists table if it doesn't exist
+CREATE TABLE IF NOT EXISTS artists (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    contact_details VARCHAR(255),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE sculptures (
-  id SERIAL PRIMARY KEY,
-  artist_id INTEGER REFERENCES artists(id),
-  name VARCHAR(100),
-  description TEXT,
-  photos TEXT[],
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE molds (
-  id SERIAL PRIMARY KEY,
-  sculpture_id INTEGER REFERENCES sculptures(id),
-  tracking_number VARCHAR(100) NOT NULL,
-  piece_count INTEGER,
-  photos TEXT[],
-  storage_location VARCHAR(50),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE castings (
-  id SERIAL PRIMARY KEY,
-  mold_id INTEGER REFERENCES molds(id),
-  casting_date TIMESTAMP,
-  photos TEXT[],
-  material_used VARCHAR(100),
-  casting_time INTEGER,
-  cost DECIMAL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- Insert sample data if not already present
+INSERT INTO artists (name, contact_details) VALUES 
+('Michelangelo', 'michelangelo@example.com'),
+('Auguste Rodin', 'rodin@example.com'),
+('Donatello', 'donatello@example.com'),
+('Gian Lorenzo Bernini', 'bernini@example.com')
+ON CONFLICT DO NOTHING;  -- Prevent inserting duplicates
