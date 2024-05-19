@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('foundry_db', 'scott', 'scott', {
+const sequelize = new Sequelize('foundry_db', 'your_username', 'your_password', {
   host: 'localhost',
   dialect: 'postgres',
 });
@@ -51,4 +51,22 @@ const Project = sequelize.define('Project', {
   timestamps: true,
 });
 
-module.exports = { sequelize, Artist, Project };
+const User = sequelize.define('User', {
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  timestamps: true,
+});
+
+module.exports = { sequelize, Artist, Project, User };

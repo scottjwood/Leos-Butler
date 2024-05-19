@@ -6,6 +6,8 @@ import ArtistForm from './components/ArtistForm';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import ProjectForm from './components/ProjectForm';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/projects/new" element={<ProjectForm />} />
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/projects/:id/edit" element={<ProjectForm />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const authenticate = require('../middleware/auth');
 const { Artist, Project } = require('../models/db');
 
 // Get all artists
-router.get('/artists', async (req, res) => {
+router.get('/artists', authenticate, async (req, res) => {
   try {
     const artists = await Artist.findAll();
     res.json(artists);
@@ -14,7 +15,7 @@ router.get('/artists', async (req, res) => {
 });
 
 // Get a single artist by ID
-router.get('/artists/:id', async (req, res) => {
+router.get('/artists/:id', authenticate, async (req, res) => {
   try {
     const artist = await Artist.findByPk(req.params.id);
     if (artist) {
@@ -29,7 +30,7 @@ router.get('/artists/:id', async (req, res) => {
 });
 
 // Create a new artist
-router.post('/artists', async (req, res) => {
+router.post('/artists', authenticate, async (req, res) => {
   try {
     const artist = await Artist.create(req.body);
     res.status(201).json(artist);
@@ -40,7 +41,7 @@ router.post('/artists', async (req, res) => {
 });
 
 // Update an existing artist
-router.put('/artists/:id', async (req, res) => {
+router.put('/artists/:id', authenticate, async (req, res) => {
   try {
     const artist = await Artist.findByPk(req.params.id);
     if (artist) {
@@ -56,7 +57,7 @@ router.put('/artists/:id', async (req, res) => {
 });
 
 // Delete an artist
-router.delete('/artists/:id', async (req, res) => {
+router.delete('/artists/:id', authenticate, async (req, res) => {
   try {
     const artist = await Artist.findByPk(req.params.id);
     if (artist) {
@@ -74,7 +75,7 @@ router.delete('/artists/:id', async (req, res) => {
 // Project Routes
 
 // Get all projects
-router.get('/projects', async (req, res) => {
+router.get('/projects', authenticate, async (req, res) => {
   try {
     const projects = await Project.findAll();
     res.json(projects);
@@ -85,7 +86,7 @@ router.get('/projects', async (req, res) => {
 });
 
 // Get a single project by ID
-router.get('/projects/:id', async (req, res) => {
+router.get('/projects/:id', authenticate, async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
     if (project) {
@@ -100,7 +101,7 @@ router.get('/projects/:id', async (req, res) => {
 });
 
 // Create a new project
-router.post('/projects', async (req, res) => {
+router.post('/projects', authenticate, async (req, res) => {
   try {
     const project = await Project.create(req.body);
     res.status(201).json(project);
@@ -111,7 +112,7 @@ router.post('/projects', async (req, res) => {
 });
 
 // Update an existing project
-router.put('/projects/:id', async (req, res) => {
+router.put('/projects/:id', authenticate, async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
     if (project) {
@@ -127,7 +128,7 @@ router.put('/projects/:id', async (req, res) => {
 });
 
 // Delete a project
-router.delete('/projects/:id', async (req, res) => {
+router.delete('/projects/:id', authenticate, async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
     if (project) {
