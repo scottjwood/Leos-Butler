@@ -1,25 +1,15 @@
-// backend/app.js
-
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import CORS package
+const apiRoutes = require('./routes/api');
+const authRoutes = require('./routes/auth'); // Import auth routes
+
 const app = express();
 
-// Middleware to parse JSON
-app.use(bodyParser.json());
-
-// Enable CORS for all routes
 app.use(cors());
-
-// Middleware to log the request body
-app.use((req, res, next) => {
-    console.log('Parsed Request Body:', req.body);
-    next();
-});
-
-app.use('/auth', require('./routes/auth'));
+app.use(bodyParser.json());
+app.use('/api', apiRoutes);
+app.use('/api', authRoutes); // Use auth routes
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
