@@ -1,23 +1,23 @@
-const pool = require('./models/db');  // Adjust the path to your db.js file
+const { sequelize, Artist, Project } = require('./models/db');
 
 const insertTestData = async () => {
     try {
+        await sequelize.sync({ force: true });  // Ensure tables are created
+
         // Insert artists
         const artists = [
-            { name: 'Michelangelo' },
-            { name: 'Auguste Rodin' },
-            { name: 'Donatello' },
-            { name: 'Gian Lorenzo Bernini' }
+            { name: 'Michelangelo', contact_details: 'michelangelo@example.com' },
+            { name: 'Auguste Rodin', contact_details: 'rodin@example.com' },
+            { name: 'Donatello', contact_details: 'donatello@example.com' },
+            { name: 'Gian Lorenzo Bernini', contact_details: 'bernini@example.com' }
         ];
 
-        for (const artist of artists) {
-            await pool.query('INSERT INTO artists (name) VALUES ($1) RETURNING id', [artist.name]);
-        }
+        const createdArtists = await Artist.bulkCreate(artists, { returning: true });
 
         // Insert projects
         const projects = [
             {
-                artist_id: 1,  // Michelangelo
+                artist_id: createdArtists[0].id,  // Michelangelo
                 title: 'David',
                 description: 'A masterpiece of Renaissance sculpture.',
                 mold_tracking_number: 'M001',
@@ -27,7 +27,7 @@ const insertTestData = async () => {
                 storage_location: 'A1-01'
             },
             {
-                artist_id: 2,  // Auguste Rodin
+                artist_id: createdArtists[1].id,  // Auguste Rodin
                 title: 'The Thinker',
                 description: 'A bronze sculpture representing philosophy.',
                 mold_tracking_number: 'M002',
@@ -37,7 +37,7 @@ const insertTestData = async () => {
                 storage_location: 'A1-02'
             },
             {
-                artist_id: 3,  // Donatello
+                artist_id: createdArtists[2].id,  // Donatello
                 title: 'Gattamelata',
                 description: 'An equestrian statue of the Renaissance period.',
                 mold_tracking_number: 'M003',
@@ -47,7 +47,7 @@ const insertTestData = async () => {
                 storage_location: 'A1-03'
             },
             {
-                artist_id: 4,  // Gian Lorenzo Bernini
+                artist_id: createdArtists[3].id,  // Gian Lorenzo Bernini
                 title: 'Apollo and Daphne',
                 description: 'A Baroque masterpiece in marble.',
                 mold_tracking_number: 'M004',
@@ -58,27 +58,13 @@ const insertTestData = async () => {
             }
         ];
 
-        for (const project of projects) {
-            await pool.query(
-                'INSERT INTO projects (artist_id, title, description, mold_tracking_number, casting_cost, casting_time, material_usage, storage_location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-                [
-                    project.artist_id,
-                    project.title,
-                    project.description,
-                    project.mold_tracking_number,
-                    project.casting_cost,
-                    project.casting_time,
-                    project.material_usage,
-                    project.storage_location
-                ]
-            );
-        }
+        await Project.bulkCreate(projects);
 
         console.log('Test data inserted successfully.');
     } catch (error) {
         console.error('Error inserting test data:', error);
     } finally {
-        pool.end();
+        await sequelize.close();
     }
 };
 
