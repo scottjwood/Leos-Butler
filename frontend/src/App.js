@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import StorageLocations from './pages/StorageLocations';
 import StorageLocationDetail from './pages/StorageLocationDetail';
 import StorageLocationForm from './components/StorageLocationForm';
+import StorageMap from './components/StorageMap';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/storage-locations/new" element={<StorageLocationForm />} />
         <Route path="/storage-locations/:id" element={<StorageLocationDetail />} />
         <Route path="/storage-locations/:id/edit" element={<StorageLocationForm />} />
+        <Route path="/storage-map" element={<StorageMap />} />
       </Routes>
     </Router>
   );

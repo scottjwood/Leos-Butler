@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+.storage-map {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.storage-location {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 150px;
+  text-align: center;
+}
