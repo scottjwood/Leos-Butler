@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import './StorageMap.css';
 
 const StorageMap = () => {
   const [locations, setLocations] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
   useEffect(() => {
     const fetchLocations = async () => {
@@ -23,6 +25,10 @@ const StorageMap = () => {
     fetchLocations();
   }, []);
 
+  const handleLocationClick = (location) => {
+    setSelectedLocation(location);
+  };
+
   if (error) return <div>{error}</div>;
 
   return (
@@ -30,13 +36,22 @@ const StorageMap = () => {
       <h1>Storage Map</h1>
       <div className="storage-map">
         {locations.map((location) => (
-          <div key={location.id} className="storage-location">
+          <div
+            key={location.id}
+            className={`storage-location ${location.capacity === 0 ? 'full' : 'available'}`}
+            onClick={() => handleLocationClick(location)}
+          >
             <p>{location.name}</p>
-            <p>{location.description}</p>
-            <p>Capacity: {location.capacity}</p>
           </div>
         ))}
       </div>
+      {selectedLocation && (
+        <div className="location-details">
+          <h2>{selectedLocation.name}</h2>
+          <p>{selectedLocation.description}</p>
+          <p>Capacity: {selectedLocation.capacity}</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,32 @@
+.storage-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .storage-location {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .storage-location.available {
+    background-color: #d4edda;
+  }
+  
+  .storage-location.full {
+    background-color: #f8d7da;
+  }
+  
+  .storage-location:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .location-details {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
