@@ -50,19 +50,19 @@ const StorageLocations = () => {
   }
 
   return (
-    <div>
-      <h2>Storage Locations</h2>
-      <ul>
+    <div className="container mx-auto p-4">
+      <h2 className="text-4xl mb-4">Storage Locations</h2>
+      <ul className="pl-5">
         {storageLocations.map(location => (
-          <li key={location.id}>
-            <h3>{location.name}</h3>
-            <p>{location.description}</p>
-            <h4>Projects</h4>
-            <ul>
+          <li key={location.id} className="mb-4">
+            <h3 className="text-2xl">{location.name}</h3>
+            
+            <h4 className="text-lg mt-2">Projects</h4>
+            <ul className="list-disc pl-5">
               {projectsByLocation[location.id] && projectsByLocation[location.id].length > 0 ? (
                 projectsByLocation[location.id].map(project => (
                   <li key={project.id}>
-                    <a href={`/projects/${project.id}`}>{project.title}</a>
+                    <a href={`/projects/${project.id}`} className="text-base">{project.title}</a>
                   </li>
                 ))
               ) : (

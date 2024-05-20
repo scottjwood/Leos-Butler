@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const ArtistDetail = () => {
   const { id } = useParams();
@@ -49,17 +49,22 @@ const ArtistDetail = () => {
   }
 
   return (
-    <div>
-      <h2>{artist.name}</h2>
-      <p>Contact Details: {artist.contact_details}</p>
-      <h3>Projects</h3>
-      <ul>
-        {projects.map(project => (
-          <li key={project.id}>
-            <a href={`/projects/${project.id}`}>{project.title}</a>
-          </li>
-        ))}
-      </ul>
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl mb-4">{artist.name}</h1>
+      <p>{artist.contact_details}</p>
+      <h2 className="text-2xl mt-6 mb-4">Projects</h2>
+      {projects && projects.length > 0 ? (
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <Link to={`/projects/${project.id}`} className="text-xl text-primary hover:underline"><li key={project.id} className="bg-card p-4 shadow rounded">
+              {project.title}
+              <p>{project.description}</p>
+            </li></Link>
+          ))}
+        </ul>
+      ) : (
+        <p>No projects found for this artist.</p>
+      )}
     </div>
   );
 };

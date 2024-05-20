@@ -14,20 +14,16 @@ const Artists = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Artists</h1>
-      <ul>
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl mb-6">Artists</h1>
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {artists.map((artist) => (
-          <li key={artist.id} className="mb-2">
-            <Link to={`/artists/${artist.id}`} className="text-blue-500 hover:underline">
-              {artist.name}
-            </Link>
+          <li key={artist.id} className="bg-card p-4 shadow rounded">
+            <Link to={`/artists/${artist.id}`} className="text-primary text-2xl hover:underline">{artist.name}</Link>
           </li>
         ))}
       </ul>
-      <Link to="/artists/new" className="text-green-500 hover:underline">
-        Add New Artist
-      </Link>
+      <Link to="/artists/new" className="block mt-6 text-secondary hover:underline">Add New Artist</Link>
     </div>
   );
 };

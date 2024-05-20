@@ -30,12 +30,12 @@ const ProjectDetail = () => {
   }
 
   if (!project) {
-    return <p>Loading...</p>;
+    return <div className="container mx-auto p-4">Loading...</div>;
   }
 
   return (
-    <div>
-      <h2>{project.title}</h2>
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl mb-4">{project.title}</h1>
       <p>{project.description}</p>
       <p>Mold Tracking Number: {project.mold_tracking_number}</p>
       <p>Casting Cost: {project.casting_cost}</p>
