@@ -33,6 +33,7 @@ const App = () => {
   return (
     <Router>
       <NavBar user={user} />
+      <div className="container mx-auto p-4">
       <Routes>
         <Route path="/artists" element={<Artists />} />
         <Route path="/artists/new" element={<ArtistForm />} />
@@ -60,6 +61,7 @@ const App = () => {
         <Route path="/reports/projects" element={<ProjectReport />} />
         <Route path="/reports/casting-processes" element={<CastingProcessReport />} />
       </Routes>
+      </div>
     </Router>
   );
 };
