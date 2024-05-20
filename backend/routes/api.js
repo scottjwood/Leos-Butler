@@ -16,6 +16,18 @@ router.get('/artists', async (req, res) => {
   }
 });
 
+// Fetch projects by artist ID
+router.get('/artists/:id/projects', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const projects = await Project.findAll({ where: { artist_id: id } });
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects for artist:', error);
+    res.status(500).json({ error: 'Failed to fetch projects for artist' });
+  }
+});
+
 // Get all projects
 router.get('/projects', async (req, res) => {
   try {

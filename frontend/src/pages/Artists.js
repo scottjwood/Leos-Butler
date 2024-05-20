@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
@@ -12,7 +13,6 @@ const Artists = () => {
           throw new Error('Failed to fetch artists');
         }
         const data = await response.json();
-        console.log('Fetched artists:', data);
         setArtists(data);
       } catch (error) {
         console.error('Error fetching artists:', error);
@@ -31,13 +31,11 @@ const Artists = () => {
     <div>
       <h2>Artists</h2>
       <ul>
-        {Array.isArray(artists) && artists.length > 0 ? (
-          artists.map((artist) => (
-            <li key={artist.id}>{artist.name}</li>
-          ))
-        ) : (
-          <p>No artists found.</p>
-        )}
+        {artists.map(artist => (
+          <li key={artist.id}>
+            <Link to={`/artists/${artist.id}`}>{artist.name}</Link>
+          </li>
+        ))}
       </ul>
     </div>
   );
