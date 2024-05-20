@@ -16,6 +16,21 @@ router.get('/artists', async (req, res) => {
   }
 });
 
+// Fetch a single artist by ID
+router.get('/artists/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const artist = await Artist.findByPk(id);
+    if (!artist) {
+      return res.status(404).json({ error: 'Artist not found' });
+    }
+    res.json(artist);
+  } catch (error) {
+    console.error('Error fetching artist:', error);
+    res.status(500).json({ error: 'Failed to fetch artist' });
+  }
+});
+
 // Fetch projects by artist ID
 router.get('/artists/:id/projects', async (req, res) => {
   const { id } = req.params;
@@ -66,6 +81,19 @@ router.get('/projects/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch project' });
   }
 });
+
+// Fetch projects by storage location
+router.get('/storage-locations/:id/projects', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const projects = await Project.findAll({ where: { storage_location: id } });
+    res.json(projects);
+  } catch (error) {
+    console.error('Error fetching projects for storage location:', error);
+    res.status(500).json({ error: 'Failed to fetch projects for storage location' });
+  }
+});
+
 // Fetch all storage locations
 router.get('/storage-locations', async (req, res) => {
   try {
