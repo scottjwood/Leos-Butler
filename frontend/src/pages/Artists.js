@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -13,14 +14,27 @@ const Artists = () => {
     fetchArtists();
   }, []);
 
+  const filteredArtists = artists
+    .filter(artist =>
+      artist.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl mb-6">Artists</h1>
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {artists.map((artist) => (
-          <li key={artist.id} className="bg-card p-4 shadow rounded">
-            <Link to={`/artists/${artist.id}`} className="text-primary text-2xl hover:underline">{artist.name}</Link>
-          </li>
+      <input
+        type="text"
+        placeholder="Search artists..."
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        className="mb-6"
+      />
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+        {filteredArtists.map((artist) => (
+          <Link to={`/artists/${artist.id}`} className="text-primary text-base hover:underline"><li key={artist.id} className="bg-card p-4 shadow rounded">
+            {artist.name}
+          </li></Link>
         ))}
       </ul>
       <Link to="/artists/new" className="block mt-6 text-secondary hover:underline">Add New Artist</Link>
