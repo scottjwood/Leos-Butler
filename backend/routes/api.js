@@ -87,12 +87,14 @@ router.get('/storage-locations/:id/projects', async (req, res) => {
   const { id } = req.params;
   try {
     const projects = await Project.findAll({ where: { storage_location: id } });
+    console.log(`Projects for storage location ${id}:`, projects); // Add this line
     res.json(projects);
   } catch (error) {
     console.error('Error fetching projects for storage location:', error);
     res.status(500).json({ error: 'Failed to fetch projects for storage location' });
   }
 });
+
 
 // Fetch all storage locations
 router.get('/storage-locations', async (req, res) => {
