@@ -18,16 +18,16 @@ router.get('/artists', async (req, res) => {
 
 // Fetch a single artist by ID
 router.get('/artists/:id', async (req, res) => {
-  const { id } = req.params;
   try {
-    const artist = await Artist.findByPk(id);
+    const artist = await Artist.findByPk(req.params.id, {
+      include: Project
+    });
     if (!artist) {
       return res.status(404).json({ error: 'Artist not found' });
     }
     res.json(artist);
   } catch (error) {
-    console.error('Error fetching artist:', error);
-    res.status(500).json({ error: 'Failed to fetch artist' });
+    res.status(500).json({ error: 'An error occurred' });
   }
 });
 
