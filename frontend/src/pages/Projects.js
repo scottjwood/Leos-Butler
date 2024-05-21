@@ -47,9 +47,13 @@ const Projects = () => {
       />
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {filteredProjects.map((project) => (
-          <Link to={`/projects/${project.id}`} className="text-primary text-base hover:underline"><li key={project.id} className="bg-card p-4 shadow rounded">
+          <Link 
+            to={`/projects/${project.id}`} 
+            className="block bg-card p-4 shadow rounded text-primary text-base hover:no-underline hover:shadow-lg hover:bg-blue-100 transition-colors duration-200"
+            key={project.id}
+          >
             {project.title}
-          </li></Link>
+          </Link>
         ))}
       </ul>
       <Link to="/projects/new" className="mt-6 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">

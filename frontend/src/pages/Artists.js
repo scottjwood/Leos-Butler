@@ -32,9 +32,13 @@ const Artists = () => {
       />
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {filteredArtists.map((artist) => (
-          <Link to={`/artists/${artist.id}`} className="text-primary text-base hover:underline"><li key={artist.id} className="bg-card p-4 shadow rounded">
+          <Link 
+            to={`/artists/${artist.id}`} 
+            className="block bg-card p-4 shadow rounded text-primary text-base hover:no-underline hover:shadow-lg hover:bg-blue-100 transition-colors duration-200"
+            key={artist.id}
+          >
             {artist.name}
-          </li></Link>
+          </Link>
         ))}
       </ul>
       <Link to="/artists/new" className="block mt-6 text-secondary hover:underline">Add New Artist</Link>
