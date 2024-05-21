@@ -1,18 +1,19 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('foundry_db', 'scott', 'scott', {
   host: '127.0.0.1',
-  dialect: 'postgres'
+  dialect: 'postgres',
 });
 
+// Define models
 const Artist = sequelize.define('Artist', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   contact_details: {
     type: DataTypes.STRING,
-    allowNull: true
-  }
+    allowNull: true,
+  },
 });
 
 const Project = sequelize.define('Project', {
@@ -20,63 +21,63 @@ const Project = sequelize.define('Project', {
     type: DataTypes.INTEGER,
     references: {
       model: Artist,
-      key: 'id'
-    }
+      key: 'id',
+    },
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   mold_tracking_number: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   casting_cost: {
     type: DataTypes.FLOAT,
-    allowNull: true
+    allowNull: true,
   },
   casting_time: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   material_usage: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   storage_location: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   status: {
     type: DataTypes.ENUM('active', 'inactive'),
     allowNull: false,
-    defaultValue: 'active'
+    defaultValue: 'active',
   },
   mold_location: {
     type: DataTypes.ENUM('in-house', 'off-site'),
     allowNull: false,
-    defaultValue: 'in-house'
-  }
+    defaultValue: 'in-house',
+  },
 });
 
 const User = sequelize.define('User', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   role: {
     type: DataTypes.STRING,
-    allowNull: false
-  }
+    allowNull: false,
+  },
 });
 
 const Notification = sequelize.define('Notification', {
@@ -84,34 +85,35 @@ const Notification = sequelize.define('Notification', {
     type: DataTypes.INTEGER,
     references: {
       model: User,
-      key: 'id'
-    }
+      key: 'id',
+    },
   },
   message: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   read: {
     type: DataTypes.BOOLEAN,
-    defaultValue: false
-  }
+    defaultValue: false,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 const StorageLocation = sequelize.define('StorageLocation', {
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   description: {
     type: DataTypes.TEXT,
-    allowNull: true
-  }
+    allowNull: true,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
+// Define associations
 User.hasMany(Notification, { foreignKey: 'user_id' });
 Notification.belongsTo(User, { foreignKey: 'user_id' });
 Artist.hasMany(Project, { foreignKey: 'artist_id' });
