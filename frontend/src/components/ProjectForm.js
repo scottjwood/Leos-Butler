@@ -11,6 +11,9 @@ const ProjectForm = () => {
   const [castingTime, setCastingTime] = useState('');
   const [materialUsage, setMaterialUsage] = useState('');
   const [storageLocation, setStorageLocation] = useState('');
+  const [status, setStatus] = useState('active');
+  const [currentStation, setCurrentStation] = useState('');
+  const [estimatedCompletionDate, setEstimatedCompletionDate] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -28,6 +31,9 @@ const ProjectForm = () => {
             setCastingTime(data.casting_time);
             setMaterialUsage(data.material_usage);
             setStorageLocation(data.storage_location);
+            setStatus(data.status || 'active');
+            setCurrentStation(data.currentStation || '');
+            setEstimatedCompletionDate(data.estimatedCompletionDate || '');
           } else {
             throw new Error(data.error);
           }
@@ -54,7 +60,10 @@ const ProjectForm = () => {
       casting_cost: castingCost,
       casting_time: castingTime,
       material_usage: materialUsage,
-      storage_location: storageLocation
+      storage_location: storageLocation,
+      status,
+      current_station: currentStation,
+      estimated_completion_date: estimatedCompletionDate,
     };
     try {
       const response = id 
@@ -113,6 +122,21 @@ const ProjectForm = () => {
       <div>
         <label>Storage Location</label>
         <input type="text" value={storageLocation} onChange={(e) => setStorageLocation(e.target.value)} />
+      </div>
+      <div>
+        <label>Status</label>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div>
+        <label>Current Station</label>
+        <input type="text" value={currentStation} onChange={(e) => setCurrentStation(e.target.value)} />
+      </div>
+      <div>
+        <label>Estimated Completion Date</label>
+        <input type="date" value={estimatedCompletionDate} onChange={(e) => setEstimatedCompletionDate(e.target.value)} />
       </div>
       <button type="submit">{id ? 'Update' : 'Create'} Project</button>
     </form>

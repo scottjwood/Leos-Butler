@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { sequelize, User, Artist, Project, Notification } = require('./models/db');
+const { sequelize, User, Artist, Project, Notification } = require('../models/db');
 
 const resetDatabase = async () => {
   try {

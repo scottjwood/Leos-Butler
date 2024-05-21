@@ -1,16 +1,25 @@
-// /backend/models/project.model.js
-
+// Import necessary dependencies
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/sequelize.config');
+const db = require('../config/sequelize.config');
 
-const Project = sequelize.define('Project', {
-  title: {
+// Define the Project model
+const Project = db.define('Project', {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  artistId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  description: {
+    type: DataTypes.TEXT,
+  },
+  status: {
+    type: DataTypes.ENUM('active', 'inactive'),
+    defaultValue: 'active',
+  },
+  currentStation: {
+    type: DataTypes.STRING,
+  },
+  estimatedCompletionDate: {
+    type: DataTypes.DATE,
   },
 });
 

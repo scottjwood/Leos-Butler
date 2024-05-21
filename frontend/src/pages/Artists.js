@@ -41,7 +41,7 @@ const Artists = () => {
           </Link>
         ))}
       </ul>
-      <Link to="/artists/new" className="block mt-6 text-secondary hover:underline">Add New Artist</Link>
+      <Link to="/artists/new" className="mt-6 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add New Artist</Link>
     </div>
   );
 };
